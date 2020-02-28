@@ -1,2 +1,2 @@
 # topicos_especiais_i
-Repositório com laboratórios desenvolvidos da disciplina de Tópicos Especiais - I.
+Repositório com laboratórios desenvolvidos na disciplina de Tópicos Especiais - I.
