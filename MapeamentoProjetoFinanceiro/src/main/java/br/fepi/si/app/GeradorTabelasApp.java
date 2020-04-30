@@ -9,7 +9,7 @@ public class GeradorTabelasApp {
 
 	public static void main(String[] args) {
 		try {
-			emf = Persistence.createEntityManagerFactory("financeiroPU");
+			emf = Persistence.createEntityManagerFactory("FinanceiroPU");
 		} catch (Exception e) {
 			System.out.println(e.getMessage().toUpperCase());
 		} finally {
