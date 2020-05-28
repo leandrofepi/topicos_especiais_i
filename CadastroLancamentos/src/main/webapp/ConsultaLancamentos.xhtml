@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition template="/WEB-INF/template/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<ui:define name="titulo">Consulta Lançamentos</ui:define>
+	</h:head>
+
+	<f:metadata>
+		<f:viewAction action="#{consultaLancamentosMBean.consultar}"></f:viewAction>
+	</f:metadata>
+
+	<ui:define name="corpo">
+		<h:form>
+			<p:messages />
+			<h1>Consulta Lançamentos</h1>
+			<p:dataTable value="#{consultaLancamentosMBean.lancamentos}"
+				var="lancamento" border="1" cellspacing="0" cellpadding="2"
+				paginator="true" rows="5" paginatorPosition="bottom">
+				<p:column headerText="#" width="5%" sortBy="#{lancamento.id}">
+					<p:outputLabel value="#{lancamento.id}" />
+				</p:column>
+				<p:column headerText="Pessoa" sortBy="#{lancamento.pessoa.nome}">
+					<p:outputLabel value="#{lancamento.pessoa.nome}" />
+				</p:column>
+				<p:column headerText="Descrição" width="20%">
+					<p:outputLabel value="#{lancamento.descricao}" />
+				</p:column>
+				<p:column headerText="Tipo" width="10%">
+					<p:outputLabel value="#{lancamento.tipo.descricao}" />
+				</p:column>
+				<p:column headerText="Valor" width="15%">
+					<p:outputLabel value="#{lancamento.valor}">
+						<f:convertNumber type="currency" locale="pt_BR" />
+					</p:outputLabel>
+				</p:column>
+				<p:column headerText="Data de Vencimento" width="12%"
+					style="text-align: center" sortBy="#{lancamento.dataVencimento}">
+					<p:outputLabel value="#{lancamento.dataVencimento}">
+						<f:convertDateTime pattern="dd/MM/yyyy"
+							timeZone="America/Sao_Paulo" />
+					</p:outputLabel>
+				</p:column>
+				<p:column headerText="Data de Pagamento" width="12%"
+					style="text-align: center">
+					<p:outputLabel value="#{lancamento.dataPagamento}">
+						<f:convertDateTime pattern="dd/MM/yyyy"
+							timeZone="America/Sao_Paulo" />
+					</p:outputLabel>
+				</p:column>
+				<p:column width="12%">
+					<p:button title="Editar" icon="ui-icon-pencil" />
+					<p:commandButton title="Remover" icon="ui-icon-trash" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
