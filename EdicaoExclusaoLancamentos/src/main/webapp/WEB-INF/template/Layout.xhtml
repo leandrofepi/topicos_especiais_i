@@ -8,8 +8,7 @@
 
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>
-		<ui:insert name="titulo">Sistema Financeiro</ui:insert>
+	<title><ui:insert name="titulo">Sistema Financeiro</ui:insert>
 	</title>
 	<h:outputStylesheet library="css" name="estilo.css" />
 </h:head>
@@ -23,7 +22,8 @@
 			<p:menuitem value="Home" icon="ui-icon-home" />
 			<p:submenu label="Cadastros" icon="ui-icon-plus">
 				<p:menuitem value="Pessoas" />
-				<p:menuitem value="Lançamentos" />
+				<p:menuitem value="Lançamentos"
+					action="/CadastroLancamentos?faces-redirect=true" />
 			</p:submenu>
 			<p:submenu label="Consultas" icon="ui-icon-search">
 				<p:menuitem value="Pessoas" />
