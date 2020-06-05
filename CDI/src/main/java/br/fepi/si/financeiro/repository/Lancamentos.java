@@ -1,0 +1,83 @@
+package br.fepi.si.financeiro.repository;
+
+import java.io.Serializable;
+import java.util.List;
+
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
+
+import br.fepi.si.financeiro.model.Lancamento;
+
+public class Lancamentos implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	private EntityManager em;
+
+	@Inject
+	public Lancamentos(EntityManager em) {
+		this.em = em;
+	}
+	
+	/** 
+	 * @param id
+	 * @return
+	 */
+	public Lancamento porId (Long id) {
+		return em.find(Lancamento.class, id);		
+	}
+	
+	/**
+	 * @param lancamento
+	 */
+	public void remover (Lancamento lancamento) {
+		EntityTransaction et = em.getTransaction();
+		et.begin();
+		this.em.remove(lancamento);
+		et.commit();
+	}
+	
+	/**
+	 * 
+	 * @param descricao
+	 * @return lista de descrições em tempo real.
+	 */
+	public List<String> descricoesQueContem(String descricao) {
+		TypedQuery<String> query = em.createQuery(
+				"select distinct descricao from Lancamento " 
+				+ "where upper(descricao) like upper(:descricao)",
+				String.class);
+		query.setParameter("descricao", "%" + descricao + "%");
+		return query.getResultList();
+	}
+
+	/**
+	 * Método que insere dados de Lançamentos.	 
+	 * @param lancamento
+	 */
+	public void adicionar(Lancamento lancamento) {
+		this.em.persist(lancamento);
+	}
+	
+	/**
+	 * Método atualiza e insere Lançamento.
+	 * @param lancamento
+	 */
+	public void guardar (Lancamento lancamento) {
+		EntityTransaction et = em.getTransaction();
+		et.begin();
+		this.em.merge(lancamento);
+		et.commit();
+	}
+
+	/**
+	 * @return Retorna todos os lançamentos.
+	 */
+	public List<Lancamento> todos() {
+		TypedQuery<Lancamento> query = em.createQuery("from Lancamento", Lancamento.class);
+		return query.getResultList();
+	}
+
+}
